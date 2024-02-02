@@ -1,0 +1,64 @@
+﻿@inherits LayoutComponentBase
+
+  <div class="sm:flex">
+    
+    <div class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
+
+        <div class="w-full lg:max-w-sm mx-auto space-y-10" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+
+            <!-- logo image-->
+            <a href="#"> <img src="assets/images/logo.png" class="w-28 absolute top-10 left-10 dark:hidden" alt=""></a>
+            <a href="#"> <img src="assets/images/logo-light.png" class="w-28 absolute top-10 left-10 hidden dark:!block" alt=""></a>
+
+            <!-- logo icon optional -->
+            <div class="hidden">
+                <img class="w-12" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=600" alt="Socialite html template">
+            </div>
+
+            
+
+
+@Body
+    </div>
+    </div>
+        <!-- image slider -->
+        <div class="flex-1 relative bg-primary max-md:hidden">
+
+
+            <div class="relative w-full h-full" tabindex="-1" uk-slideshow="animation: slide; autoplay: true">
+
+                <ul class="uk-slideshow-items w-full h-full">
+                    <li class="w-full">
+                        <img src="assets/images/post/img-3.jpg" alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
+                        <div class="absolute bottom-0 w-full uk-tr ansition-slide-bottom-small z-10">
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+                            <h4 class="!text-white text-2xl font-semibold mt-7" uk-slideshow-parallax="y: 600,0,0">   </h4>
+                            <p class="!text-white text-lg mt-7 leading-8" uk-slideshow-parallax="y: 800,0,0;"> The best login page image!</p>
+                        </div>
+                    </div>
+                        <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
+                    </li>
+                    <li class="w-full">
+                        <img src="assets/images/post/img-2.jpg" alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
+                        <div class="absolute bottom-0 w-full uk-tr ansition-slide-bottom-small z-10">
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+                            <h4 class="!text-white text-2xl font-semibold mt-7" uk-slideshow-parallax="y: 800,0,0">  </h4>
+                            <p class="!text-white text-lg mt-7 leading-8" uk-slideshow-parallax="y: 800,0,0;"> Free ride in blackhawk for everyone who registers!</p>
+                        </div>
+                    </div>
+                        <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
+                    </li>
+                </ul>
+
+                <!-- slide nav -->
+                <div class="flex justify-center">
+                    <ul class="inline-flex flex-wrap justify-center  absolute bottom-8 gap-1.5 uk-dotnav uk-slideshow-nav"> </ul>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
