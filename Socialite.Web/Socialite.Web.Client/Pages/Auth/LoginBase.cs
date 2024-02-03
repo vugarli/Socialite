@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using Socialite.Web.Client.Models.Auth;
 using Socialite.Web.Client.Services.Authentication;
-using System.ComponentModel;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace Socialite.Web.Client.Pages.Auth
 {
@@ -16,18 +13,22 @@ namespace Socialite.Web.Client.Pages.Auth
         public EditForm _editForm { get; set; }
 
         [Inject]
-        IHttpClientFactory _httpClientFactory { get; set; }
+        private ISnackbar _snackbar { get; set; }
+
+        [Inject]
+        private NavigationManager _navigationManager { get; set; }
+
         [Inject]
         public AuthenticationStateProvider AuthStateProvider { get; set; }
 
         [Inject]
         IAuthenticationServicee AuthenticationService { get; set; }
 
-        HttpClient client;
-        protected override Task OnInitializedAsync()
+        protected async override Task OnInitializedAsync()
         {
-            client = _httpClientFactory.CreateClient("API");
-            return base.OnInitializedAsync();
+            var state = await AuthStateProvider.GetAuthenticationStateAsync();
+            if((state?.User?.Identity?.IsAuthenticated ?? false) == true)
+                _navigationManager.NavigateTo("/");
         }
 
         public async Task Login()
@@ -35,9 +36,13 @@ namespace Socialite.Web.Client.Pages.Auth
             if (_editForm?.EditContext?.Validate() ?? false)
             {
                 var result = await AuthenticationService.Login(LoginModel);
-                var secretresult = await client.GetStringAsync("/api/Secured/secret");
-                var a = 1;
-                await AuthStateProvider.GetAuthenticationStateAsync();
+                if (result)
+                { 
+                    await AuthStateProvider.GetAuthenticationStateAsync();
+                    _navigationManager.NavigateTo("/");
+                }
+                else
+                    _snackbar.Add("Login failed",Severity.Error);
             }
         }
 

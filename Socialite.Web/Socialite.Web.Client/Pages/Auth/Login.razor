@@ -1,12 +1,12 @@
-﻿@using Socialite.Web.Client.Components
+﻿@page "/login"
 @inherits LoginBase
 @layout AuthLayout
-@page "/login"
 @using MudBlazor
 @using Socialite.Web.Client.Models.Auth
 
-@rendermode InteractiveWebAssembly
+@attribute [AllowAnonymous]
 
+@rendermode InteractiveWebAssembly
 
 <!-- title -->
 <div>

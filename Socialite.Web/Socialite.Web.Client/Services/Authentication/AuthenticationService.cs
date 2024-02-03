@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Socialite.Web.Client.Models.Auth;
 using System.ComponentModel.Design;
@@ -20,18 +21,21 @@ namespace Socialite.Web.Client.Services.Authentication
         private HttpClient client;
         private NavigationManager _navigationManager;
         private ILocalStorageService _localStorageService;
+        private readonly AuthenticationStateProvider customAuthenticationProvider;
 
         public string Token { get; private set; }
 
         public AuthenticationService(
             IHttpClientFactory httpClientFactory,
             NavigationManager navigationManager,
-            ILocalStorageService localStorageService
+            ILocalStorageService localStorageService,
+            AuthenticationStateProvider customAuthenticationProvider
         )
         {
             client = httpClientFactory.CreateClient("Auth");
             _navigationManager = navigationManager;
             _localStorageService = localStorageService;
+            this.customAuthenticationProvider = customAuthenticationProvider;
         }
 
         
@@ -39,9 +43,9 @@ namespace Socialite.Web.Client.Services.Authentication
         public async Task<bool> Login(LoginModel loginModel)
         {
             var result = await client.PostAsJsonAsync("/api/Auth/login", loginModel);
-            if (result.IsSuccessStatusCode) 
+            var content  = await result.Content.ReadFromJsonAsync<LoginResponse>();
+            if (content.Result) 
             {
-                var content  = await result.Content.ReadFromJsonAsync<LoginResponse>();
                 Token = content.Token;
                 await _localStorageService.SetItemAsync<string>("token", Token);
                 return true;
@@ -53,6 +57,7 @@ namespace Socialite.Web.Client.Services.Authentication
         {
             Token = null;
             await _localStorageService.RemoveItemAsync("token");
+            //var state = await customAuthenticationProvider.GetAuthenticationStateAsync();
             _navigationManager.NavigateTo("/login");
         }
 

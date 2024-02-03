@@ -17,10 +17,8 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        
             HttpClient httpClient = httpClientFactory.CreateClient("API");
             SecureContent = await httpClient.GetStringAsync("/api/Secured/Secret");
-        
     }
 
 

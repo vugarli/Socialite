@@ -31,8 +31,14 @@ namespace Socialite.Infrastructure.Identity
             if (user == null) throw new UserNotFoundException(userName);
             
             var roles = await _userManager.GetRolesAsync(user);
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, userName) };
 
+            var claims = new List<Claim> 
+            { 
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+            };
+           
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

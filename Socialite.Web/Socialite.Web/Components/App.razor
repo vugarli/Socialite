@@ -19,13 +19,17 @@
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Mud Blazor -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
 </head>
 <body>
 
     <Socialite.Web.Client.Components.Routes @rendermode="new NonPreRenderMode()" />
 
     <script src="_framework/blazor.web.js"></script>
-
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
     <!-- post preview modal -->
     <div class="hidden lg:p-20 max-lg:!items-start" id="preview_modal" uk-modal="">
