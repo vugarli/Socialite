@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Domain", "Sociali
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Infrastructure", "Socialite.Infrastructure\Socialite.Infrastructure.csproj", "{E5EA5B1B-226E-42E0-8195-112C4845AFE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socialite.Web", "Socialite.Web\Socialite.Web\Socialite.Web.csproj", "{33C01155-FF8E-4B00-ADD1-7C8476D6B28E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Web", "Socialite.Web\Socialite.Web\Socialite.Web.csproj", "{33C01155-FF8E-4B00-ADD1-7C8476D6B28E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socialite.Web.Client", "Socialite.Web\Socialite.Web.Client\Socialite.Web.Client.csproj", "{C47D88B1-EA72-415A-9E63-9D289D90E4CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Web.Client", "Socialite.Web\Socialite.Web.Client\Socialite.Web.Client.csproj", "{C47D88B1-EA72-415A-9E63-9D289D90E4CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

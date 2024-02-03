@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@page "/secure"
+@attribute [Authorize]
+<h3>Secure: @SecureContent</h3>
+
+@rendermode @(new NonPreRenderMode())
+
+
+@code {
+
+    [Inject]
+    public IHttpClientFactory httpClientFactory { get; set; }
+
+
+    public string SecureContent { get; set; }
+
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        
+            HttpClient httpClient = httpClientFactory.CreateClient("API");
+            SecureContent = await httpClient.GetStringAsync("/api/Secured/Secret");
+        
+    }
+
+
+}

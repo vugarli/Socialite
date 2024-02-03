@@ -1,10 +1,14 @@
-﻿@inherits LayoutComponentBase
-
-  <div class="sm:flex">
+﻿@using MudBlazor
+@inherits LayoutComponentBase
     
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="sm:flex">
     <div class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
 
-        <div class="w-full lg:max-w-sm mx-auto space-y-10" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
+    <div class="w-full lg:max-w-sm mx-auto space-y-10" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
 
             <!-- logo image-->
             <a href="#"> <img src="assets/images/logo.png" class="w-28 absolute top-10 left-10 dark:hidden" alt=""></a>
@@ -18,7 +22,7 @@
             
 
 
-@Body
+                @Body
     </div>
     </div>
         <!-- image slider -->

@@ -1,4 +1,12 @@
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
+using Socialite.Web;
+using Socialite.Web.Client.Authentication;
 using Socialite.Web.Client.Pages;
+using Socialite.Web.Client.Services;
+using Socialite.Web.Client.Services.Authentication;
 using Socialite.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +15,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddMudServices();
+builder.Services.AddHttpClient("API", (sp, cl) =>
+{
+    cl.BaseAddress = new Uri("http://localhost:5115");
+});
+
+
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationProvider>();
+builder.Services.AddAuthorizationCore();
+
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<AuthMessageHandler>();
+builder.Services.AddScoped<IAuthenticationServicee, AuthenticationService>();
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
 
 var app = builder.Build();
 
