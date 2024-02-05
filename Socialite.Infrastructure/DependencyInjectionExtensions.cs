@@ -18,14 +18,13 @@ namespace Socialite.Infrastructure
 
         public static IServiceCollection RegisterInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>();
-
+            
             services.AddDbContext<ApplicationIdentityDbContext>()
             .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
 
-
+            
 
             services.AddScoped<ITokenService,TokenService>();
 

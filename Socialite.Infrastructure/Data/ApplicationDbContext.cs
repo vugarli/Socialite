@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Socialite.Domain.Entities;
 using Socialite.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,7 @@ namespace Socialite.Infrastructure.Data
     public class ApplicationDbContext : DbContext
     {
         private IConfiguration _configuration { get; }
-        public ApplicationDbContext(
-            DbContextOptions<ApplicationDbContext> options,
-            IConfiguration configuration)
-        : base(options)
+        public ApplicationDbContext(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -34,6 +32,13 @@ namespace Socialite.Infrastructure.Data
         {
             // override defaults
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.Entity<Comment>()
+                .ToTable("Comments")
+                .HasDiscriminator<string>("CommentType")
+                .HasValue<ReplyComment>("reply")
+                .HasValue<PostComment>("post");
+
             base.OnModelCreating(builder);
         }
     }

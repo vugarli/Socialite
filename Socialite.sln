@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Web", "Socialite.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socialite.Web.Client", "Socialite.Web\Socialite.Web.Client\Socialite.Web.Client.csproj", "{C47D88B1-EA72-415A-9E63-9D289D90E4CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socialite.Common", "Socialite.Common\Socialite.Common.csproj", "{5512668E-581F-43B6-B2FE-FA3C806DDBCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C47D88B1-EA72-415A-9E63-9D289D90E4CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C47D88B1-EA72-415A-9E63-9D289D90E4CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C47D88B1-EA72-415A-9E63-9D289D90E4CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5512668E-581F-43B6-B2FE-FA3C806DDBCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5512668E-581F-43B6-B2FE-FA3C806DDBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5512668E-581F-43B6-B2FE-FA3C806DDBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5512668E-581F-43B6-B2FE-FA3C806DDBCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
