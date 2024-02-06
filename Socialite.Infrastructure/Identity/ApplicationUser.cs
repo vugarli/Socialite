@@ -12,9 +12,9 @@ namespace Socialite.Infrastructure.Identity
     public class ApplicationUser : IdentityUser
     {
         public string DisplayName { get; set; }
-        
-        public User User { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
+
+        //public User User { get; set; }
 
     }
 }

@@ -27,9 +27,12 @@ function Get-UserInput {
     return $userInput
 }
 
-$option = Show-Menu -Options @("Migrate Identity", "Update", "Migrate Data")
+$option = Show-Menu -Options @("Migrate Identity", "Update Identity","Update Data", "Migrate Data")
 
-if ($option -eq "Update") {  
+if ($option -eq "Update Data") {  
+    dotnet ef database update -s .\Socialite.Api\Socialite.Api.csproj -p .\Socialite.Infrastructure\Socialite.Infrastructure.csproj -c ApplicationDbContext
+}
+if ($option -eq "Update Identity") {  
     dotnet ef database update -s .\Socialite.Api\Socialite.Api.csproj -p .\Socialite.Infrastructure\Socialite.Infrastructure.csproj -c ApplicationIdentityDbContext
 } else {
     $commands = @{

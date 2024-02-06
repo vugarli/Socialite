@@ -1,4 +1,4 @@
-﻿namespace Socialite.Api.Controllers.Auth
+﻿namespace Socialite.Application.Responses.Auth
 {
     public class AuthResponse
     {

@@ -14,7 +14,7 @@ namespace Socialite.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.HasOne(iu => iu.User).WithOne().HasForeignKey<User>(u=>u.IdentityId);
+            //builder.HasOne(iu => iu.User).WithOne().HasForeignKey<User>(u=>u.IdentityId);
         }
     }
 }

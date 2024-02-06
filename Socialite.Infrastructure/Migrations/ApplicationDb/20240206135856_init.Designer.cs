@@ -9,11 +9,11 @@ using Socialite.Infrastructure.Data;
 
 #nullable disable
 
-namespace Socialite.Infrastructure.Migrations
+namespace Socialite.Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240205091415_fixpost")]
-    partial class fixpost
+    [Migration("20240206135856_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,9 +230,6 @@ namespace Socialite.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -301,15 +298,6 @@ namespace Socialite.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Socialite.Domain.Entities.User", b =>
-                {
-                    b.HasOne("Socialite.Infrastructure.Identity.ApplicationUser", null)
-                        .WithOne("User")
-                        .HasForeignKey("Socialite.Domain.Entities.User", "IdentityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Socialite.Domain.Entities.PostComment", b =>
                 {
                     b.HasOne("Socialite.Domain.Entities.PostAggregate.Post", "Post")
@@ -352,12 +340,6 @@ namespace Socialite.Infrastructure.Migrations
             modelBuilder.Entity("Socialite.Domain.Entities.User", b =>
                 {
                     b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("Socialite.Infrastructure.Identity.ApplicationUser", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

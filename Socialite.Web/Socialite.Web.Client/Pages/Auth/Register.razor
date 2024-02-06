@@ -14,8 +14,58 @@
         </p>
     </div>
 
+<EditForm uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true" class="space-y-7 text-sm text-black font-medium dark:text-white" Model="RegisterModel" @ref="_editForm">
 
-    <!-- form -->
+    <Blazored.FluentValidation.FluentValidationValidator></Blazored.FluentValidation.FluentValidationValidator>
+
+    <div class="mt-2.5">
+        <label for="email" class="">Display name</label>
+        <input @bind-value="RegisterModel.DisplayName" id="email" type="text" Placeholder="Displayname" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+        <ValidationMessage style="color:red;" For="@(()=>RegisterModel.DisplayName)"></ValidationMessage>
+    </div>
+
+    <div class="mt-2.5">
+        <label for="email" class="">Email address</label>
+        <input @bind-value="RegisterModel.Email" id="email" type="email" Placeholder="Email" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+        <ValidationMessage style="color:red;" For="@(()=>RegisterModel.Email)"></ValidationMessage>
+    </div>
+
+    <div class="mt-2.5">
+        <label for="password" class="">Password</label>
+        <input @bind-value="RegisterModel.Password" id="password" name="password" type="password" placeholder="***" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+        <ValidationMessage style="color:red;" For="@(()=>RegisterModel.Password)"></ValidationMessage>
+    </div>
+    <div class="mt-2.5">
+        <label for="password" class="">Repeat Password</label>
+        <input @bind-value="RegisterModel.RePassword" id="password" name="password" type="password" placeholder="***" class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+        <ValidationMessage style="color:red;" For="@(()=>RegisterModel.RePassword)"></ValidationMessage>
+    </div>
+
+    <!-- submit button -->
+    <div>
+        <button @onclick="Register" class="button bg-primary text-white w-full">Sign up</button>
+    </div>
+
+    <div class="text-center flex items-center gap-6">
+        <hr class="flex-1 border-slate-200 dark:border-slate-800">
+        Or continue with
+        <hr class="flex-1 border-slate-200 dark:border-slate-800">
+    </div>
+
+    <!-- social login -->
+    <div class="flex gap-2" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400 ;repeat: true">
+        <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm"> <ion-icon name="logo-facebook" class="text-lg"></ion-icon> facebook  </a>
+        <a href="#" class="button flex-1 flex items-center gap-2 bg-sky-600 text-white text-sm"> <ion-icon name="logo-twitter"></ion-icon> twitter  </a>
+        <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon name="logo-github"></ion-icon> github  </a>
+    </div>
+
+</EditForm>
+
+
+
+
+
+@*     <!-- form -->
     <form method="#" action="#" class="space-y-7 text-sm text-black font-medium dark:text-white" uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100 ;repeat: true">
 
         <div class="grid grid-cols-2 gap-4 gap-y-7">
@@ -90,4 +140,4 @@
             <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm"> <ion-icon name="logo-github"></ion-icon> github  </a>
         </div>
 
-    </form>
+    </form> *@

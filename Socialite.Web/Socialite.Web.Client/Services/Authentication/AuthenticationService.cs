@@ -13,6 +13,7 @@ namespace Socialite.Web.Client.Services.Authentication
     {
         Task<string> GetToken();
         Task<bool> Login(LoginModel model);
+        Task<bool> Register(RegisterModel registerModel);
         Task Logout();
     }
 
@@ -38,7 +39,17 @@ namespace Socialite.Web.Client.Services.Authentication
             this.customAuthenticationProvider = customAuthenticationProvider;
         }
 
-        
+
+        public async Task<bool> Register(RegisterModel registerModel)
+        {
+            var result = await client.PostAsJsonAsync("/api/Auth/register", registerModel);
+            if (result.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         public async Task<bool> Login(LoginModel loginModel)
         {

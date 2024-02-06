@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.1" />
+    <PackageReference Include="Xeption" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Socialite.Domain\Socialite.Domain.csproj" />
+    <ProjectReference Include="..\Socialite.Infrastructure\Socialite.Infrastructure.csproj" />
   </ItemGroup>
+
+
 
 </Project>

@@ -24,7 +24,7 @@ namespace Socialite.Infrastructure
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
 
-            
+            services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<ITokenService,TokenService>();
 

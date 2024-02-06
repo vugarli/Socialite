@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Socialite.Application.Services.Auth;
+using Socialite.Application.Services.Auth.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,9 @@ namespace Socialite.Infrastructure
 
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
-           
 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthValidator, AuthValidator>();
 
 
             return services;

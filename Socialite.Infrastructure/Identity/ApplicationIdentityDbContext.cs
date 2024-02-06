@@ -17,8 +17,8 @@ namespace Socialite.Infrastructure.Identity
         {
             _configuration = configuration;
         }
+        
 
-    
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = _configuration.GetConnectionString(name: "MSSQL");
