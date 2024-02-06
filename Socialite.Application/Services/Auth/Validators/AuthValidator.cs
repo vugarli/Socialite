@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Socialite.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Socialite.Application.Exceptions.Auth;
 using System.Data;
@@ -16,11 +15,9 @@ namespace Socialite.Application.Services.Auth.Validators
         BaseValidator<AuthenticationValidationException>,
         IAuthValidator
     {
-        public UserManager<ApplicationUser> UserManager { get; }
 
-        public AuthValidator(UserManager<ApplicationUser> userManager)
+        public AuthValidator()
         {
-            UserManager = userManager;
         }
 
         

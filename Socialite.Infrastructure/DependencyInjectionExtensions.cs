@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Socialite.Application.Services.Auth;
 using Socialite.Domain.Abstract.Identity;
 using Socialite.Infrastructure.Data;
 using Socialite.Infrastructure.Identity;
+using Socialite.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace Socialite.Infrastructure
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
 
             services.AddDbContext<ApplicationDbContext>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddScoped<ITokenService,TokenService>();
 

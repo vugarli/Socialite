@@ -13,8 +13,10 @@ using Socialite.Domain.Abstract.Identity;
 using Socialite.Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Socialite.Infrastructure.Data;
+using Socialite.Application.Services.Auth;
 
-namespace Socialite.Application.Services.Auth
+
+namespace Socialite.Infrastructure.Services
 {
     public partial class AuthenticationService : IAuthenticationService
     {

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Socialite.Infrastructure\Socialite.Infrastructure.csproj" />
+    <ProjectReference Include="..\Socialite.Domain\Socialite.Domain.csproj" />
   </ItemGroup>
 
 

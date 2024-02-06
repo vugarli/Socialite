@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Socialite.Application\Socialite.Application.csproj" />
     <ProjectReference Include="..\Socialite.Domain\Socialite.Domain.csproj" />
   </ItemGroup>
 
