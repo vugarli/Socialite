@@ -15,7 +15,7 @@ namespace Socialite.Infrastructure
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
 
-            
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IAuthValidator, AuthValidator>();
 
 
