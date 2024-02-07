@@ -24,6 +24,7 @@ namespace Socialite.Infrastructure
             
 
             services.AddScoped<IAuthValidator, AuthValidator>();
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;

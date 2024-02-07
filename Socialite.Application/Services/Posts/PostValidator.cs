@@ -15,7 +15,7 @@ namespace Socialite.Application.Services.Posts
         public void ValidatePostOnCreate(PostPostRequest request)
         {
             Validate(
-                (Rule: HasValidContent(request), Parameter: "Post body"),
+                (Rule: IsValidContent(request), Parameter: "Post body"),
 
                 (Rule: IsValidVisibility(request.Visibility),
                 Parameter: nameof(request.Visibility))
@@ -24,10 +24,10 @@ namespace Socialite.Application.Services.Posts
         }
 
 
-        public object HasValidContent(PostPostRequest request)
+        public object IsValidContent(PostPostRequest request)
         => new 
         {
-            Condition = request.Content == null && request.MediaUrl == null,
+            Condition = !(request.Content == null && request.MediaUrl == null),
             Message = "Post body can not be empty!"
         };
 

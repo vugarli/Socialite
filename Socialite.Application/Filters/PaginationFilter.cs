@@ -18,4 +18,11 @@ namespace Socialite.Application.Filters
             return query.Skip((int)((page - 1) * per_page)).Take((int)per_page);
         }
     }
+
+    public static class PaginationFilterExtensions
+    {
+        public static IFilter<T>[] WithoutPagination<T>(this IFilter<T>[] filters)
+        => filters.Where(f => !(f is IPaginationFilter)).ToArray();
+    }
+
 }

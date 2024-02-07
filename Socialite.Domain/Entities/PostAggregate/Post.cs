@@ -18,12 +18,12 @@ namespace Socialite.Domain.Entities.PostAggregate
         public string Content { get; set; }
 
 
-        public Post(string content, int userId, PostVisibility visibility)
-        {
-            Content = content;
-            UserId = userId;
-            Visibility = visibility;
-        }
+        //public Post(string content, int userId, PostVisibility visibility)
+        //{
+        //    Content = content;
+        //    UserId = userId;
+        //    Visibility = visibility;
+        //}
 
         public List<PostImpression> Impressions { get; set; } = new();
 

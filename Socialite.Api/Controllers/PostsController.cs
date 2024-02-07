@@ -45,10 +45,10 @@ namespace Socialite.Api.Controllers
             {
                 return BadRequest(ex);
             }
-            catch(Exception ex) 
-            { 
-                return InternalServerError("Something bad happended");
-            }
+            //catch(Exception ex) 
+            //{ 
+            //    return InternalServerError("Something bad happended");
+            //}
         }
 
         [HttpGet("{postId}/impressions")]

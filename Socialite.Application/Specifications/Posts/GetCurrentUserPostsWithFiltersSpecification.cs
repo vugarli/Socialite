@@ -1,4 +1,5 @@
-﻿using Socialite.Application.Services.Auth;
+﻿using Socialite.Application.Filters;
+using Socialite.Application.Services.Auth;
 using Socialite.Domain.Entities.PostAggregate;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.Specifications.Posts
 {
-    public class GetCurrentUserPostsSpecification
+    public class GetCurrentUserPostsWithFiltersSpecification
         : Specification<Post>
     {
-        public GetCurrentUserPostsSpecification(ICurrentUserService currentUserService)
+        public GetCurrentUserPostsWithFiltersSpecification(ICurrentUserService currentUserService, params IFilter<Post>[] filters)
             : base(p=>p.UserId == currentUserService.GetCurrentUserId())
         {
-            
+            SetFilters(filters);
         }
     }
 }
