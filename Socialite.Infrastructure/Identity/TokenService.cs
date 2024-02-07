@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Socialite.Domain.Abstract.Identity;
+using Socialite.Domain.Entities;
+using Socialite.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,10 +17,14 @@ namespace Socialite.Infrastructure.Identity
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public TokenService(UserManager<ApplicationUser> userManager)
+        public TokenService(
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task<string> GetTokenAsync(string userName)
@@ -26,17 +32,20 @@ namespace Socialite.Infrastructure.Identity
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = Encoding.ASCII.GetBytes(AppConstants.JWTKEY);
-            var user = await _userManager.FindByNameAsync(userName);
+            var applicationUser = await _userManager.FindByNameAsync(userName);
             
-            if (user == null) throw new UserNotFoundException(userName);
-            
-            var roles = await _userManager.GetRolesAsync(user);
+            if (applicationUser == null) throw new UserNotFoundException(userName);
+
+            var user = _dbContext.Set<User>()
+                .FirstOrDefault(u => u.IdentityId == applicationUser.Id);
+
+            var roles = await _userManager.GetRolesAsync(applicationUser);
 
             var claims = new List<Claim> 
             { 
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim(ClaimTypes.Email, applicationUser.Email),
+                new Claim(ClaimTypes.Name, applicationUser.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
            
             foreach (var role in roles)

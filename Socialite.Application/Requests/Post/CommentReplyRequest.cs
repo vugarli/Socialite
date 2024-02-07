@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.Requests.Post
 {
-    public class PostReplyRequest
+    public class CommentReplyRequest
     {
+        public string Content { get; set; }
     }
 }

@@ -61,6 +61,8 @@ builder.Services.AddAuthorization();
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplication();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 var app = builder.Build();
 

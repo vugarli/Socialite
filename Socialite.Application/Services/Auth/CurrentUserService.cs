@@ -10,7 +10,7 @@ namespace Socialite.Application.Services.Auth
 {
     public interface ICurrentUserService
     {
-        public string GetCurrentUserId();
+        public int GetCurrentUserId();
     }
     public class CurrentUserService : ICurrentUserService
     {
@@ -20,13 +20,15 @@ namespace Socialite.Application.Services.Auth
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetCurrentUserId()
+        public int GetCurrentUserId()
         {
-            var userId = _httpContextAccessor
-                .HttpContext
-                .User
-                .FindFirst(ClaimTypes.NameIdentifier).Value;
-            return userId;
+            var claims = _httpContextAccessor
+                .HttpContext?
+                .User?.Claims.ToList();
+
+            var userId = claims
+                .FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier)?.Value;
+            return Convert.ToInt32(userId);
         }
     }
 }

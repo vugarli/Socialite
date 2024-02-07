@@ -17,7 +17,7 @@ namespace Socialite.Application.Abstract.Repositories
         public Task<Post> GetPostBySpecification(
             Specification<Post> specification);
 
-        public Task<IEnumerable<Post>> GetPostsBySpecification(
+        public Task<IEnumerable<Post>> GetPostsBySpecificationAsync(
             Specification<Post> specification);
 
         public Task<bool> CheckPostBySpecification(
