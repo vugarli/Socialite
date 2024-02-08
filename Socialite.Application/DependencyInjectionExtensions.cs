@@ -2,6 +2,7 @@
 using Socialite.Application.Services.Auth;
 using Socialite.Application.Services.Auth.Validators;
 using Socialite.Application.Services.Posts;
+using Socialite.Application.Services.Posts.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,10 @@ namespace Socialite.Infrastructure
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IPostValidator, PostValidator>();
+
+            services.AddScoped<ICommentValidator, CommentValidator>();
             
+            services.AddScoped<IImpressionValidator, ImpressionValidator>();
 
             services.AddScoped<IAuthValidator, AuthValidator>();
 

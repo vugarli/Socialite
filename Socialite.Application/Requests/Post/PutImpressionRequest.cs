@@ -11,7 +11,6 @@ namespace Socialite.Application.Requests.Post
     public class PutImpressionRequest
     {
         public PostImpressionType ImpressionType { get; set; }
-
         public int PostId { get; set; }
     }
 }

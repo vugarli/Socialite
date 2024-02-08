@@ -2,6 +2,7 @@
 using Socialite.Application.Queries;
 using Socialite.Application.Requests.Post;
 using Socialite.Application.Responses.Post;
+using Socialite.Domain.Entities;
 using Socialite.Domain.Entities.PostAggregate;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Socialite.Application.Services.Posts
         public Task<IQueryResult> GetPostImpressionsAsync(int postId);
         public Task PutPostImpressionsAsync(int postId,PutImpressionRequest request);
 
-        public Task<IQueryResult> GetPostCommentsAsync(int postId, params IFilter<Post>[] filters);
-        public Task PostPostCommentsAsync(int postId, PostCommentRequest request);
+        public Task<IQueryResult> GetPostCommentsAsync(int postId, params IFilter<PostComment>[] filters);
+        public Task PostPostCommentsAsync(PostCommentRequest request);
     }
 }

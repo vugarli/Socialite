@@ -34,6 +34,7 @@ namespace Socialite.Infrastructure
 
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IImpressionRepository, ImpressionRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ITokenService,TokenService>();

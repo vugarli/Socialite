@@ -2,7 +2,6 @@
 using Socialite.Application.Filters;
 using Socialite.Application.Specifications;
 using Socialite.Domain.Entities;
-using Socialite.Infrastructure.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

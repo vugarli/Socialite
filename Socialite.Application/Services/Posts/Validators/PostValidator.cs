@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Socialite.Application.Services.Posts
+namespace Socialite.Application.Services.Posts.Validators
 {
     public class PostValidator : BaseValidator<PostValidationException>, IPostValidator
     {
@@ -19,13 +19,13 @@ namespace Socialite.Application.Services.Posts
 
                 (Rule: IsValidVisibility(request.Visibility),
                 Parameter: nameof(request.Visibility))
-                
+
                 );
         }
 
 
         public object IsValidContent(PostPostRequest request)
-        => new 
+        => new
         {
             Condition = !(request.Content == null && request.MediaUrl == null),
             Message = "Post body can not be empty!"

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using HybridModelBinding;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
+using Socialite.Api.CustomAttribute;
 using Socialite.Application.Exceptions;
 using Socialite.Application.Filters;
 using Socialite.Application.Queries;
@@ -41,20 +43,33 @@ namespace Socialite.Api.Controllers
                 await _postService.PostPostsAsync(postPostRequest);
                 return Ok();
             }
-            catch (PostValidationException ex) 
+            catch (PostValidationException ex)
+                when (ex.InnerException is PostNotFoundException)
+            {
+                return NotFound(ex);
+            }
+            catch (PostValidationException ex)
             {
                 return BadRequest(ex);
             }
-            //catch(Exception ex) 
-            //{ 
-            //    return InternalServerError("Something bad happended");
-            //}
+            catch (Exception)
+            { 
+                return InternalServerError("Something bad happened");
+            }
         }
 
         [HttpGet("{postId}/impressions")]
-        public async Task<IQueryResult> GetPostImpressionsAsync(int postId)
+        public async Task<IActionResult> GetPostImpressionsAsync(int postId)
         {
-            return await _postService.GetPostImpressionsAsync(postId);
+            try
+            {
+                return Ok(await _postService.GetPostImpressionsAsync(postId));
+            }
+            catch (PostValidationException ex)
+                when (ex.InnerException is PostNotFoundException)
+            {
+                return NotFound(ex.InnerException);
+            }
         }
 
         [HttpPut("{PostId}/impressions/{ImpressionType}")]
@@ -67,8 +82,17 @@ namespace Socialite.Api.Controllers
                 return Ok();
             }
             catch (PostValidationException ex)
+                when(ex.InnerException is PostNotFoundException)
+            {
+                return NotFound(ex.InnerException);
+            }
+            catch (ImpressionValidationException ex)
             {
                 return BadRequest(ex);
+            }
+            catch(Exception) 
+            {
+                return InternalServerError("Something bad happened");
             }
         }
 
@@ -78,15 +102,43 @@ namespace Socialite.Api.Controllers
             int postId,
             [FromQuery] PaginationFilter<PostComment> paginationFilter)
         {
-            return Ok();
+            try
+            {
+                return Ok(await _postService.GetPostCommentsAsync(postId));
+            }
+            catch (PostValidationException ex)
+                when (ex.InnerException is PostNotFoundException)
+            {
+                return NotFound(ex.InnerException);
+            }
+            catch (Exception)
+            {
+                return InternalServerError("Something bad happened");
+            }
         }
 
         [HttpPost("{postId}/comments")]
         public async Task<IActionResult> CommentToPostAsync(
-            int postId,
-            [FromBody] PostCommentRequest postCommentRequest)
+            [FromHybrid] PostCommentRequest postCommentRequest)
         {
-            return Ok();
+            try
+            {
+                await _postService.PostPostCommentsAsync(postCommentRequest);
+                return Ok();
+            }
+            catch (PostValidationException ex)
+                when (ex.InnerException is PostNotFoundException)
+            {
+                return NotFound(ex.InnerException);
+            }
+            catch (CommentValidationException ex)
+            {
+                return BadRequest(ex);
+            }
+            catch (Exception)
+            {
+                return InternalServerError("Something bad happened");
+            }
         }
     }
 }

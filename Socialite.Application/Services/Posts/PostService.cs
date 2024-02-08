@@ -3,10 +3,14 @@ using Socialite.Application.Abstract.Repositories;
 using Socialite.Application.Filters;
 using Socialite.Application.Queries;
 using Socialite.Application.Requests.Post;
+using Socialite.Application.Responses.Comments;
 using Socialite.Application.Responses.Post;
 using Socialite.Application.Services.Auth;
+using Socialite.Application.Services.Posts.Validators;
+using Socialite.Application.Specifications.Comments;
 using Socialite.Application.Specifications.Posts;
 using Socialite.Domain.Abstract;
+using Socialite.Domain.Entities;
 using Socialite.Domain.Entities.PostAggregate;
 using System;
 using System.Collections.Generic;
@@ -21,7 +25,10 @@ namespace Socialite.Application.Services.Posts
         public IPostRepository _postRepository { get; }
         public IImpressionRepository _impressionRepository { get; }
         public ICurrentUserService _currentUserService { get; }
+        public ICommentRepository _commentRepository { get; }
         public IPostValidator _postValidator { get; }
+        public ICommentValidator _commentValidator { get; }
+        public IImpressionValidator _impressionValidator { get; }
         public IMapper _mapper { get; }
         public IUnitOfWork _unitOfWork { get; }
 
@@ -29,14 +36,20 @@ namespace Socialite.Application.Services.Posts
             IPostRepository postRepository,
             IImpressionRepository impressionRepository,
             ICurrentUserService currentUserService,
+            ICommentRepository commentRepository,
             IPostValidator postValidator,
+            ICommentValidator commentValidator,
+            IImpressionValidator impressionValidator,
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
             _postRepository = postRepository;
             _impressionRepository = impressionRepository;
             _currentUserService = currentUserService;
+            _commentRepository = commentRepository;
             _postValidator = postValidator;
+            _commentValidator = commentValidator;
+            _impressionValidator = impressionValidator;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
@@ -82,10 +95,11 @@ namespace Socialite.Application.Services.Posts
 
         public async Task PutPostImpressionsAsync(int postId, PutImpressionRequest request)
         {
-            // validate impression 
+            _impressionValidator.ValidateImpressionOnPut(request);
 
             var spec = new GetPostByIdSpecification(postId);
             var post = await _postRepository.GetPostBySpecification(spec);
+
             _postValidator.ValidatePostOnGet(post);
 
             var impression = _mapper.Map<PostImpression>(request);
@@ -95,15 +109,45 @@ namespace Socialite.Application.Services.Posts
         }
 
 
-        public Task<IQueryResult> GetPostCommentsAsync(int postId, params IFilter<Post>[] filters)
+        public async Task<IQueryResult> GetPostCommentsAsync(
+            int postId,
+            params IFilter<PostComment>[] filters)
         {
-            throw new NotImplementedException();
+            var postSpec = new GetPostByIdSpecification(postId);
+            var post = await _postRepository.GetPostBySpecification(postSpec);
+
+            _postValidator.ValidatePostOnGet(post);
+
+            var commentSpec = new GetPostCommentsByPostIdWithFilters(postId,filters);
+            var commentSpecWithoutPagination = 
+                new GetPostCommentsByPostIdWithFilters(postId,filters.WithoutPagination());
+
+            var comments = await _commentRepository
+                .GetPostCommentsBySpecificationAsync(commentSpec);
+
+            var commentsCount = await _commentRepository
+                .CountPostCommentsBySpecification(commentSpecWithoutPagination);
+
+            var dtos = _mapper.Map<IEnumerable<PostCommentDto>>(comments);
+
+            return dtos.ToQueryResult(filters,commentsCount);
         }
 
         
-        public Task PostPostCommentsAsync(int postId, PostCommentRequest request)
+        public async Task PostPostCommentsAsync(PostCommentRequest request)
         {
-            throw new NotImplementedException();
+            var postSpec = new GetPostByIdSpecification(request.PostId);
+            var post = await _postRepository.GetPostBySpecification(postSpec);
+
+            _postValidator.ValidatePostOnGet(post);
+
+            _commentValidator.ValidatePostCommentOnPost(request);
+
+
+            var comment = _mapper.Map<PostComment>(request);
+
+            await _commentRepository.CreatePostCommentAsync(comment);
+            await _unitOfWork.SaveChangesAsync(default);
         }
     }
 }

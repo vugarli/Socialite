@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Socialite.Application.Services.Posts
+namespace Socialite.Application.Services.Posts.Validators
 {
     public interface IPostValidator
     {

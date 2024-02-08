@@ -30,7 +30,7 @@ namespace Socialite.Infrastructure.Identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // override defaults
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            
             base.OnModelCreating(builder);
         }
 

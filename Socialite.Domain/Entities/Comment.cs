@@ -11,7 +11,10 @@ namespace Socialite.Domain.Entities
     {
         public string Content { get; set; }
         public List<ReplyComment> Replies { get; set; }
-        
+
+        public int UserId { get; set; }
+        public User User { get; set; }
+
         public Comment(string content)
         {
             Content = content;

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Socialite.Infrastructure.Migrations.ApplicationDb
+namespace Socialite.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration
@@ -79,6 +79,7 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MediaId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    Visibility = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -105,7 +106,8 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommentType = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CommentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: true),
                     ParentCommentId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -124,6 +126,12 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,6 +170,11 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_MediaId",

@@ -3,24 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Socialite.Infrastructure.Data;
 
 #nullable disable
 
-namespace Socialite.Infrastructure.Migrations.ApplicationDb
+namespace Socialite.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240207172435_visibilty")]
-    partial class visibilty
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -35,8 +32,7 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
 
                     b.Property<string>("CommentType")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -48,7 +44,12 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments", (string)null);
 
@@ -263,6 +264,17 @@ namespace Socialite.Infrastructure.Migrations.ApplicationDb
                     b.HasIndex("ParentCommentId");
 
                     b.HasDiscriminator().HasValue("reply");
+                });
+
+            modelBuilder.Entity("Socialite.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("Socialite.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Socialite.Domain.Entities.PostAggregate.Post", b =>

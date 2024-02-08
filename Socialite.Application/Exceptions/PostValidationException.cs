@@ -16,5 +16,7 @@ namespace Socialite.Application.Exceptions
 
         public PostValidationException(Exception innerException)
             :base("Post validation failed see errors for details.",innerException) { }
+
+
     }
 }
