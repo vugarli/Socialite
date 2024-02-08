@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.Services.Posts
 {
-    public class PostValidator : BaseValidator<PostValidationException>,IPostValidator
+    public class PostValidator : BaseValidator<PostValidationException>, IPostValidator
     {
         public void ValidatePostOnCreate(PostPostRequest request)
         {
@@ -37,7 +37,11 @@ namespace Socialite.Application.Services.Posts
             Condition = Enum.IsDefined(postVisibility),
             Message = $"PostVisibility with value {postVisibility} is not defined!"
         };
-        
 
+        public void ValidatePostOnGet(Post post)
+        {
+            if (post == null)
+                throw new PostValidationException(new PostNotFoundException());
+        }
     }
 }

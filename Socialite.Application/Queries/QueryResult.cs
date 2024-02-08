@@ -37,7 +37,7 @@ namespace Socialite.Application.Queries
         {
             IQueryResult queryResult;
 
-            if (filters.Any(f => f is PaginationFilter<Tent>))
+            if (filters != null && filters.Any(f => f is PaginationFilter<Tent>))
             {
                 var pFilter = (PaginationFilter<Tent>)filters.FirstOrDefault(c => c is PaginationFilter<Tent>);
 

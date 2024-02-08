@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.MappingProfiles
 {
-    public class CurrentUserIdResolver : IValueResolver<PostPostRequest, Post, int>
+    public class CurrentUserIdResolver<TSrc,TDest> : IValueResolver<TSrc, TDest, int>
     {
         public ICurrentUserService _currentUserService { get; }
         public CurrentUserIdResolver(ICurrentUserService currentUserService)
@@ -18,8 +18,7 @@ namespace Socialite.Application.MappingProfiles
             _currentUserService = currentUserService;
         }
 
-
-        public int Resolve(PostPostRequest source, Post destination, int destMember, ResolutionContext context)
+        public int Resolve(TSrc source, TDest destination, int destMember, ResolutionContext context)
         {
             return _currentUserService.GetCurrentUserId();
         }

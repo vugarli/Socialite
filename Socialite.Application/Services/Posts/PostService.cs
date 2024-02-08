@@ -19,6 +19,7 @@ namespace Socialite.Application.Services.Posts
     public class PostService : IPostService
     {
         public IPostRepository _postRepository { get; }
+        public IImpressionRepository _impressionRepository { get; }
         public ICurrentUserService _currentUserService { get; }
         public IPostValidator _postValidator { get; }
         public IMapper _mapper { get; }
@@ -26,12 +27,14 @@ namespace Socialite.Application.Services.Posts
 
         public PostService(
             IPostRepository postRepository,
+            IImpressionRepository impressionRepository,
             ICurrentUserService currentUserService,
             IPostValidator postValidator,
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
             _postRepository = postRepository;
+            _impressionRepository = impressionRepository;
             _currentUserService = currentUserService;
             _postValidator = postValidator;
             _mapper = mapper;
@@ -65,24 +68,40 @@ namespace Socialite.Application.Services.Posts
             return queryResult;
         }
 
+        public async Task<IQueryResult> GetPostImpressionsAsync(int postId)
+        {
+            var spec = new GetPostByIdWithImpressionsSpecification(postId);
+            var post = await _postRepository.GetPostBySpecification(spec);
+
+            _postValidator.ValidatePostOnGet(post);
+
+            var dtos = _mapper.Map<IEnumerable<ImpressionDto>>(post.Impressions);
+
+            return dtos.ToQueryResult<ImpressionDto, PostImpression>(default,default);
+        }
+
+        public async Task PutPostImpressionsAsync(int postId, PutImpressionRequest request)
+        {
+            // validate impression 
+
+            var spec = new GetPostByIdSpecification(postId);
+            var post = await _postRepository.GetPostBySpecification(spec);
+            _postValidator.ValidatePostOnGet(post);
+
+            var impression = _mapper.Map<PostImpression>(request);
+
+            await _impressionRepository.PutImpressionAsync(impression);
+            await _unitOfWork.SaveChangesAsync(default);
+        }
+
+
         public Task<IQueryResult> GetPostCommentsAsync(int postId, params IFilter<Post>[] filters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IQueryResult> GetPostImpressionsAsync(int postId)
-        {
-            throw new NotImplementedException();
-        }
-
         
-
         public Task PostPostCommentsAsync(int postId, PostCommentRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task PutPostImpressionsAsync(int postId, PutImpressionRequest request)
         {
             throw new NotImplementedException();
         }

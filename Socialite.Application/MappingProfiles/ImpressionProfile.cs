@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Socialite.Application.Requests.Post;
 using Socialite.Application.Responses.Post;
-using Socialite.Application.Services.Auth;
 using Socialite.Domain.Entities.PostAggregate;
 using System;
 using System.Collections.Generic;
@@ -11,20 +10,17 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.MappingProfiles
 {
-    public class PostProfile : Profile
+    public class ImpressionProfile
+        : Profile
     {
-        public PostProfile()
+        public ImpressionProfile()
         {
-            CreateMap<PostPostRequest, Post>()
-                .ForMember(c => c.UserId, opt => 
-                opt.MapFrom<CurrentUserIdResolver<PostPostRequest,Post>>());
+            CreateMap<PutImpressionRequest,PostImpression>()
+                .ForMember( pi => pi.UserId,opt =>
+                opt.MapFrom<CurrentUserIdResolver<PutImpressionRequest,PostImpression>>());
 
-
-            CreateMap<Post,PostDto>();
-
+            CreateMap<PostImpression,ImpressionDto>();
 
         }
-
-
     }
 }

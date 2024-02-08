@@ -52,17 +52,24 @@ namespace Socialite.Api.Controllers
         }
 
         [HttpGet("{postId}/impressions")]
-        public async Task<IActionResult> GetPostImpressionsAsync(int postId)
+        public async Task<IQueryResult> GetPostImpressionsAsync(int postId)
         {
-            return Ok();
+            return await _postService.GetPostImpressionsAsync(postId);
         }
 
-        [HttpPut("{postId}/impressions")]
+        [HttpPut("{PostId}/impressions/{ImpressionType}")]
         public async Task<IActionResult> PutPostImpressionsAsync(
-            int postId, 
-            [FromBody] PutImpressionRequest impressionRequest)
+             [FromRoute] PutImpressionRequest impressionRequest)
         {
-            return Ok();
+            try
+            {
+                await _postService.PutPostImpressionsAsync(impressionRequest.PostId,impressionRequest);
+                return Ok();
+            }
+            catch (PostValidationException ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
 

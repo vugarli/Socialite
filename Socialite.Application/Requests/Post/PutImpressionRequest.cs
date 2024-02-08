@@ -1,4 +1,5 @@
-﻿using Socialite.Domain.Entities.PostAggregate;
+﻿using Microsoft.AspNetCore.Mvc;
+using Socialite.Domain.Entities.PostAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Socialite.Application.Requests.Post
     public class PutImpressionRequest
     {
         public PostImpressionType ImpressionType { get; set; }
+
+        public int PostId { get; set; }
     }
 }

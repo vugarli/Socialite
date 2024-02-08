@@ -17,12 +17,7 @@ namespace Socialite.Domain.Entities.PostAggregate
 
     public class PostImpression : BaseEntity
     {
-        public PostImpression(int userId, PostImpressionType impressionType)
-        {
-            UserId = userId;
-            ImpressionType = impressionType;
-        }
-
+        
         public PostImpressionType ImpressionType { get; set; }
 
         public int PostId { get; set; }

@@ -33,6 +33,7 @@ namespace Socialite.Infrastructure
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IImpressionRepository, ImpressionRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ITokenService,TokenService>();

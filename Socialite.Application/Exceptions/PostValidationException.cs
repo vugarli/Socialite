@@ -10,9 +10,11 @@ namespace Socialite.Application.Exceptions
     public class PostValidationException : Xeption
     {
         public PostValidationException()
-            :base("Post validation failed see errors for details.")
         {
             
         }
+
+        public PostValidationException(Exception innerException)
+            :base("Post validation failed see errors for details.",innerException) { }
     }
 }

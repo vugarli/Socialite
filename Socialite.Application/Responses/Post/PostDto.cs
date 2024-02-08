@@ -9,6 +9,8 @@ namespace Socialite.Application.Responses.Post
 {
     public class PostDto
     {
+        public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
         public PostVisibility Visibility{ get; set; }
         public string Content { get; set; }
         public string? MediaUrl { get; set; }
