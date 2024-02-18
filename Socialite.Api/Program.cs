@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Socialite.Api.ActionFilters;
 using Socialite.Infrastructure;
 using Socialite.Infrastructure.Identity;
 
@@ -39,7 +40,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers(options=>
+    {
+        options.Filters.Add(new PaginationActionFilter());
+    });
 
 builder.Services.AddAuthentication(options =>
 {

@@ -14,6 +14,8 @@ namespace Socialite.Application.Specifications.Posts
             :base(p=>p.Id == Id)
         {
             AddInclude(p=>p.Impressions);
+            AddInclude(p=>p.Media);
+            AddInclude(p => p.User); //
         }
     }
 }

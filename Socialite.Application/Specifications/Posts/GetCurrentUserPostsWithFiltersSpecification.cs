@@ -16,6 +16,8 @@ namespace Socialite.Application.Specifications.Posts
             : base(p=>p.UserId == currentUserService.GetCurrentUserId())
         {
             SetFilters(filters);
+            AddInclude(p => p.User);
+            AddInclude(p => p.Media);
         }
     }
 }

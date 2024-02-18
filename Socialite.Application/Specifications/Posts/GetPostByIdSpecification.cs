@@ -13,7 +13,8 @@ namespace Socialite.Application.Specifications.Posts
         public GetPostByIdSpecification(int Id)
             :base(p=>p.Id == Id)
         {
-            
+            AddInclude(p => p.User);
+            AddInclude(p => p.Media);
         }
 
     }

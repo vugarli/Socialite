@@ -12,6 +12,7 @@ using Socialite.Application.Requests.Post;
 using Socialite.Application.Services.Posts;
 using Socialite.Domain.Entities;
 using Socialite.Domain.Entities.PostAggregate;
+using Socialite.Common.Endpoints;
 
 namespace Socialite.Api.Controllers
 {
@@ -27,14 +28,14 @@ namespace Socialite.Api.Controllers
             _postService = postService;
         }
 
-        [HttpGet()]
-        public async Task<IQueryResult> GetCurrentUserPostsAsync(
+        [HttpGet(PostEndpoints.PostPostEndpoint)]
+        public async Task<IActionResult> GetCurrentUserPostsAsync(
             [FromQuery] PaginationFilter<Post> paginationFilter)
         {
-            return await _postService.GetCurrentUserPostsAsync(paginationFilter);
+            return Ok(await _postService.GetCurrentUserPostsAsync(paginationFilter));
         }
 
-        [HttpPost()]
+        [HttpPost(PostEndpoints.PostPostEndpoint)]
         public async Task<IActionResult> PostPostAsync(
             [FromBody] PostPostRequest postPostRequest)
         {
@@ -58,7 +59,7 @@ namespace Socialite.Api.Controllers
             }
         }
 
-        [HttpGet("{postId}/impressions")]
+        [HttpGet(PostEndpoints.PostImpressionsEndpoint)]
         public async Task<IActionResult> GetPostImpressionsAsync(int postId)
         {
             try
@@ -72,7 +73,7 @@ namespace Socialite.Api.Controllers
             }
         }
 
-        [HttpPut("{PostId}/impressions/{ImpressionType}")]
+        [HttpPut(PostEndpoints.PutPostImpressionEndpoint)]
         public async Task<IActionResult> PutPostImpressionsAsync(
              [FromRoute] PutImpressionRequest impressionRequest)
         {
@@ -97,14 +98,14 @@ namespace Socialite.Api.Controllers
         }
 
 
-        [HttpGet("{postId}/comments")]
+        [HttpGet(PostEndpoints.PostCommentsEndpoint)]
         public async Task<IActionResult> GetPostCommentsAsync(
             int postId,
             [FromQuery] PaginationFilter<PostComment> paginationFilter)
         {
             try
             {
-                return Ok(await _postService.GetPostCommentsAsync(postId));
+                return Ok(await _postService.GetPostCommentsAsync(postId,paginationFilter));
             }
             catch (PostValidationException ex)
                 when (ex.InnerException is PostNotFoundException)
@@ -117,7 +118,7 @@ namespace Socialite.Api.Controllers
             }
         }
 
-        [HttpPost("{postId}/comments")]
+        [HttpPost(PostEndpoints.PostCommentsEndpoint)]
         public async Task<IActionResult> CommentToPostAsync(
             [FromHybrid] PostCommentRequest postCommentRequest)
         {

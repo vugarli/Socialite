@@ -47,12 +47,16 @@ namespace Socialite.Infrastructure.Repositories
 
         public async Task<Post> GetPostBySpecification(Specification<Post> specification)
         => await SpecificationEvaluator
-            .GetQuery(Queryable,specification)
+            .GetQuery(Queryable, specification)
             .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<Post>> GetPostsBySpecificationAsync(Specification<Post> specification)
         => await SpecificationEvaluator
             .GetQuery(Queryable, specification)
             .ToListAsync();
+
+        public IQueryable<Post> GetPostQueryableBySpecification(Specification<Post> specification)
+        => SpecificationEvaluator
+            .GetQuery(Queryable, specification);
     }
 }

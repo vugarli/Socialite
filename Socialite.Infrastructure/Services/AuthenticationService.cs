@@ -73,13 +73,12 @@ namespace Socialite.Infrastructure.Services
             var identityUser = new ApplicationUser();
             identityUser.Email = dto.Email;
             identityUser.UserName = dto.Email;
-            identityUser.DisplayName = dto.DisplayName;
 
             var result = await _userManager.CreateAsync(identityUser,dto.Password);
             
             _authValidator.ValidateRegisterIdentityResult(result);
 
-            var user = new User(identityUser.Id);
+            var user = new User(identityUser.Id,dto.DisplayName);
 
             await _dbContext.Set<User>().AddAsync(user);
             await _dbContext.SaveChangesAsync();

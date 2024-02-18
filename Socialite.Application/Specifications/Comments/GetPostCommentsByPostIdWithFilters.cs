@@ -15,6 +15,7 @@ namespace Socialite.Application.Specifications.Comments
             : base(c=>c.PostId == postId)
         {
             SetFilters(filters);
+            AddInclude(c=>c.User);
         }
     }
 }

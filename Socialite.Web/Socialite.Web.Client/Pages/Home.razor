@@ -1,10 +1,17 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
 @using Socialite.Web.Client.Components;
+
+@inherits HomePageBase
 @layout MainLayout;
 @rendermode InteractiveWebAssembly
+
+
 @attribute [Authorize]
 
+<MudThemeProvider Theme="_customTheme" />
+
+<MudDialogProvider></MudDialogProvider>
 
 <PageTitle>Home</PageTitle>
 
@@ -20,8 +27,8 @@
                         <div class="bg-white rounded-xl shadow-sm md:p-4 p-2 space-y-4 text-sm font-medium border1 dark:bg-dark2">
 
                             <div class="flex items-center md:gap-3 gap-1">
-                                <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3" uk-toggle="target: #create-status"> 
-                                    <div class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
+                                <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3" > 
+                                    <div @onclick="OpenCreatePostDialog" class="py-2.5 text-center dark:text-white"> What do you have in mind? </div>
                                 </div>
                                 <div class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20" uk-toggle="target: #create-status">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -42,9 +49,15 @@
                             </div>
                             
                         </div>
-                        
+                        @if (Posts != null)
+                @foreach (var post in Posts)
+                {
+                    
+            <Socialite.Web.Client.Components.Post.TextPost.TextPostComponent Model="post"></Socialite.Web.Client.Components.Post.TextPost.TextPostComponent>
+
+                }
                         <!--  post image-->
-                        <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
+                        @* <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
 
                             <!-- post heading -->
                             <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
@@ -403,7 +416,7 @@
                                 <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery"> Replay</button>
                             </div> 
 
-                        </div>
+                        </div> *@
 
                         <!-- placeholder -->
                         <div class="rounded-xl shadow-sm p-4 space-y-4 bg-slate-200/40 animate-pulse border1 dark:bg-dark2">

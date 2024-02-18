@@ -12,6 +12,7 @@ namespace Socialite.Domain.Entities
     public class User : BaseEntity
     {
         public string IdentityId { get; private set; }
+        public string DisplayName { get; set; }
 
         public string? ProfileImage { get; set; }
 
@@ -21,9 +22,10 @@ namespace Socialite.Domain.Entities
         //public List<User> Followers { get; set; }
         //public List<User> Followees { get; set; }
 
-        public User(string identityId)
+        public User(string identityId,string displayName)
         {
             IdentityId = identityId;
+            DisplayName = displayName;
         }
 
         #pragma warning disable CS8618 // Ef requires

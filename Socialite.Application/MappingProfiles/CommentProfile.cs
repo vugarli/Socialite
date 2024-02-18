@@ -14,9 +14,9 @@ namespace Socialite.Application.MappingProfiles
     {
         public CommentProfile()
         {
-            CreateMap<PostComment,PostCommentDto>();
-
-            //CreateMap<ReplyComment,ReplyCommentDto>();
+            CreateMap<PostComment,PostCommentDto>()
+                .ForMember(c=>c.CommenterName,opt=>opt.MapFrom(c=>c.User.DisplayName))
+                .ForMember(c=>c.CommenterProfilePic,opt=>opt.MapFrom(c=>c.User.ProfileImage));
 
             CreateMap<PostCommentRequest,PostComment>()
                 .ForMember(c => c.UserId,

@@ -22,6 +22,7 @@ namespace Socialite.Application.Services.Posts
 {
     public class PostService : IPostService
     {
+        public int CurrentUserId { get => _currentUserService.GetCurrentUserId(); }
         public IPostRepository _postRepository { get; }
         public IImpressionRepository _impressionRepository { get; }
         public ICurrentUserService _currentUserService { get; }
@@ -60,6 +61,12 @@ namespace Socialite.Application.Services.Posts
 
             var post = _mapper.Map<Post>(postPostRequest);
             post.UserId = _currentUserService.GetCurrentUserId();
+            if (postPostRequest.MediaUrl != null)
+            {
+                var media = new Media(postPostRequest.MediaUrl,MediaType.Image);
+                post.Media = media;
+            }
+
             await _postRepository.CreatePostAsync(post);
             await _unitOfWork.SaveChangesAsync(default);
         }
@@ -73,8 +80,8 @@ namespace Socialite.Application.Services.Posts
             //TODO add pagination filter to spec !! 
 
             var count = await _postRepository.CountPostsBySpecification(specWithoutPaginationFilter);
-            var posts = await _postRepository.GetPostsBySpecificationAsync(spec);
-            var dtos = _mapper.Map<IEnumerable<PostDto>>(posts);
+            var posts = _postRepository.GetPostQueryableBySpecification(spec);
+            var dtos = _mapper.ProjectTo<PostDto>(posts,new { currentUser = CurrentUserId });
 
             var queryResult = dtos.ToQueryResult(filters,count);
 

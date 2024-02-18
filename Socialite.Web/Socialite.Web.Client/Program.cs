@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using Socialite.Web.Client.Authentication;
 using Socialite.Web.Client.Services;
 using Socialite.Web.Client.Services.Authentication;
+using Socialite.Web.Client.Services.Post;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddAuthorizationCore();
 
 
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IAuthenticationServicee, AuthenticationService>();
 builder.Services.AddScoped<AuthMessageHandler>();
 //builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();

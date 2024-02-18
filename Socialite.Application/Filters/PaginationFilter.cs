@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Socialite.Application.Filters
 {
-    public interface IPaginationFilter { }
+    public interface IPaginationFilter 
+    {
+        public int? page { get; set; }
+        public int? per_page { get; set; }
+    }
+
     public class PaginationFilter<T> : IFilter<T>, IPaginationFilter
     {
         public int? page { get; set; }

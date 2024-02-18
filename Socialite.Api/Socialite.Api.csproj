@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Socialite.Application\Socialite.Application.csproj" />
+    <ProjectReference Include="..\Socialite.Common\Socialite.Common.csproj" />
     <ProjectReference Include="..\Socialite.Infrastructure\Socialite.Infrastructure.csproj" />
   </ItemGroup>
 
