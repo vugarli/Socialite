@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Socialite.Api.ActionFilters;
+using Socialite.Api.CustomAttribute;
 using Socialite.Infrastructure;
 using Socialite.Infrastructure.Identity;
 
@@ -43,6 +44,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services
     .AddControllers(options=>
     {
+        options.ModelBinderProviders.InsertBodyAndRouteBinding();
         options.Filters.Add(new PaginationActionFilter());
     });
 

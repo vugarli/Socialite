@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Socialite.Application.Abstract.Repositories;
 using Socialite.Application.Services.Auth;
+using Socialite.Application.Services.Users;
 using Socialite.Domain.Abstract;
 using Socialite.Domain.Abstract.Identity;
 using Socialite.Infrastructure.Data;
@@ -35,6 +36,7 @@ namespace Socialite.Infrastructure
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IImpressionRepository, ImpressionRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ITokenService,TokenService>();

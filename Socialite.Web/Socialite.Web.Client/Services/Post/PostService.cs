@@ -11,9 +11,10 @@ namespace Socialite.Web.Client.Services.Post
     {
         public Task<bool> CreatePost(CreatePostRequest request);
         public Task<IEnumerable<PostModel>> GetCurrentUserPosts();
+        public Task<bool> CommentToPostAsync(int postId,string commentContent);
         public Task<bool> ReactToPost(PostImpressionType type,int postId);
-        public Task<IEnumerable<CommentModel>> GetComments(int postId);
-        public Task<IEnumerable<CommentModel>> GetPaginatedComments(int postId,int page);
+        public Task<PaginatedQueryResult<CommentModel>> GetPaginatedComments(int postId);
+        public Task<PaginatedQueryResult<CommentModel>> GetPaginatedCommentsFromUrl(string url);
     }
 
     public class PostService : IPostService
@@ -61,26 +62,37 @@ namespace Socialite.Web.Client.Services.Post
             return result.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<CommentModel>> GetComments(int postId)
+        public async Task<PaginatedQueryResult<CommentModel>> GetPaginatedComments(int postId)
         {
             var url = SmartFormat.Smart.Format(
                Common.Endpoints.PostEndpoints.PostCommentsEndpoint,
-               new { postId = postId });
+               new { postId = postId })+$"?page=1&per_page={COMMENTS_PER_PAGE}";
 
-            var result = await _client.GetFromJsonAsync<QueryResult<CommentModel>>(url);
+            var result = await _client.GetFromJsonAsync<PaginatedQueryResult<CommentModel>>(url);
 
-            return result.Data;
+            return result;
         }
 
-        public Task<IEnumerable<CommentModel>> GetPaginatedComments(int postId, int page)
+        public async Task<PaginatedQueryResult<CommentModel>> GetPaginatedCommentsFromUrl(string url)
+        {
+            var result = await _client
+                .GetFromJsonAsync<PaginatedQueryResult<CommentModel>>(url);
+            return result;
+        }
+
+        public async Task<bool> CommentToPostAsync(int postId,string commentContent)
         {
             var url = SmartFormat.Smart.Format(
                Common.Endpoints.PostEndpoints.PostCommentsEndpoint,
-               new { postId = postId });
+               new { postId = postId});
 
-            var result = await _client.GetFromJsonAsync<<CommentModel>>(url);
+            var result = await _client
+               .PostAsJsonAsync(
+                url,
+               new CreatePostCommentRequest(commentContent)
+               ) ;
 
-            return result.Data;
+            return result.IsSuccessStatusCode;
         }
     }
 }

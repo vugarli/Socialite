@@ -120,7 +120,7 @@ namespace Socialite.Api.Controllers
 
         [HttpPost(PostEndpoints.PostCommentsEndpoint)]
         public async Task<IActionResult> CommentToPostAsync(
-            [FromHybrid] PostCommentRequest postCommentRequest)
+            [FromRouteAndBodyAttribute] PostCommentRequest postCommentRequest)
         {
             try
             {

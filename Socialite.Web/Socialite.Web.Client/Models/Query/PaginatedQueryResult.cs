@@ -7,6 +7,9 @@
         public int RowCount { get; set; }
         public int TotalPages { get; set; }
 
+        public bool HasNext { get; set; }
+        public bool HasPrev { get; set; }
+
         public string? Previous { get; set; }
         public string? Next { get; set; }
     }

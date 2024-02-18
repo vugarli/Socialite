@@ -6,6 +6,7 @@ using Socialite.Application.Services.Auth.Validators;
 using Socialite.Application.Services.File;
 using Socialite.Application.Services.Posts;
 using Socialite.Application.Services.Posts.Validators;
+using Socialite.Application.Services.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,11 @@ namespace Socialite.Infrastructure
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUsersService, UserService>();
             services.AddScoped<IPostValidator, PostValidator>();
 
             services.AddScoped<ICommentValidator, CommentValidator>();
+            services.AddScoped<IUserValidator, UserValidator>();
             
             services.AddScoped<IImpressionValidator, ImpressionValidator>();
             services.AddSingleton<IPresignedUploadUrlGeneratorService, PresignedUploadUrlGeneratorService>();
