@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Socialite.Web.Client.Models.Post;
 using Socialite.Web.Client.Services.Post;
+using Socialite.Web.Client.Services.Users;
 
 namespace Socialite.Web.Client.Components.Post.TextPost
 {
@@ -11,6 +12,9 @@ namespace Socialite.Web.Client.Components.Post.TextPost
 
         [Inject]
         public IPostService PostService { get; set; }
+
+        [Inject]
+        public IUserService UserService { get; set; }
 
         public bool CommentsHasNext { get; set; }
         public string CommentsNext { get; set; }
@@ -49,14 +53,18 @@ namespace Socialite.Web.Client.Components.Post.TextPost
                 return;
 
             await PostService.CommentToPostAsync(Model.Id,CommentValue);
-            CommentValue = string.Empty;
+
+            var info = await UserService.GetCurrentUserInfo();
 
             var commentModel = new CommentModel()
             {
-                
+                CommenterName = info.DisplayName,
+                CommenterProfilePic = info.ProfileImageUrl,
+                Content = CommentValue
             };
+            Comments.Add(commentModel); 
 
-
+            CommentValue = string.Empty;
         }
 
         public async Task Impress(PostImpressionType type)
