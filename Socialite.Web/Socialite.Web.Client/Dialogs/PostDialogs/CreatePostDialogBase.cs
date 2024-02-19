@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using Socialite.Web.Client.Models.Post;
+using Socialite.Web.Client.Services.File;
 using Socialite.Web.Client.Services.Post;
 
 namespace Socialite.Web.Client.Dialogs.PostDialogs
@@ -18,6 +19,16 @@ namespace Socialite.Web.Client.Dialogs.PostDialogs
         public CreatePostRequest CreateModel { get; set; } = new();
 
         public EditForm _editForm { get; set; }
+
+        [Inject]
+        public IFileUploadService FileUploadService { get; set; }
+
+
+        public async Task UploadFiles(IBrowserFile browserFile)
+        {
+            var fileName = await FileUploadService.UploadFileAndProvideNameAsync(browserFile);
+            CreateModel.MediaUrl = fileName;
+        }
 
         public async Task Post()
         {

@@ -20,21 +20,35 @@ namespace Socialite.Web.Client.Services.Authentication
 
             public override async Task<AuthenticationState> GetAuthenticationStateAsync()
             {
-            string token = null;
+
             // throws exception with prerender enabled
-            //try
-            //{
-            token = await _localStorage.GetItemAsync<string>("token");
-            //}
-            //catch (Exception) { }
+            string token = await _localStorage.GetItemAsync<string>("token");
             
+            if (string.IsNullOrEmpty(token)) return new AuthenticationState(null); ;
+
+            var claims = ParseClaimsFromJwt(token);
+
+            var expirationClaim = claims.FirstOrDefault(c=>c.Type == "exp");
+
+            if (expirationClaim != null)
+            {
+                var expDate = DateTime.UnixEpoch.AddSeconds(Convert.ToInt64(expirationClaim.Value));
+
+                if (DateTime.UtcNow > expDate)
+                {
+                    var authState = new AuthenticationState(new ClaimsPrincipal());
+                    NotifyAuthenticationStateChanged(Task.FromResult(authState));
+                    return authState;
+                }
+            }
+
 
             var identity = new ClaimsIdentity();
                 _http.DefaultRequestHeaders.Authorization = null;
 
                 if (!string.IsNullOrEmpty(token))
                 {
-                    identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
+                    identity = new ClaimsIdentity(claims, "jwt");
                     _http.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
                 }

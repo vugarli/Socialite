@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using Socialite.Common.Endpoints;
 
 namespace Socialite.Web.Client.Services.File
 {
@@ -15,7 +16,8 @@ namespace Socialite.Web.Client.Services.File
         public async Task<string> UploadFileAndProvideNameAsync(IBrowserFile e)
         {
             var newFileName = Guid.NewGuid().ToString() + e.Name;
-            var url = await client.GetStringAsync($"/fileupload/photos/{newFileName}");
+            
+            var url = await client.GetStringAsync($"/api/fileupload/photos/{newFileName}");
             url = url.Replace("https", "http"); // certificate problem
 
             long maxFileSize = 1024L * 1024L * 1024L * 2L;

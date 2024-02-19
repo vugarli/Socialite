@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using Socialite.Web.Client.Authentication;
 using Socialite.Web.Client.Services;
 using Socialite.Web.Client.Services.Authentication;
+using Socialite.Web.Client.Services.File;
 using Socialite.Web.Client.Services.Post;
 using Socialite.Web.Client.Services.Users;
 
@@ -28,7 +29,7 @@ builder.Services.AddHttpClient("Auth", (sp, cl) =>
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationProvider>();
 builder.Services.AddAuthorizationCore();
 
-
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IUserService, UserService>();
